@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/firebase_helper/firebase_auth_helper.dart';
 import 'package:social_media_app/screens/home_screen.dart';
+import 'package:social_media_app/screens/screen_home_main_page.dart';
 import 'package:social_media_app/screens/widgets/screen_title.dart';
 import 'package:social_media_app/screens/widgets/splash_logo.dart';
 import 'package:social_media_app/constants/styles.dart';
@@ -80,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   if (isLogin) {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => HomeScreen(),
+                      builder: (context) => ScreenMainPage(),
                     ));
                   } 
                 },

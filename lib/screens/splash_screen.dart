@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/screens/home_screen.dart';
 import 'package:social_media_app/screens/login_screen.dart';
+import 'package:social_media_app/screens/screen_home_main_page.dart';
 import 'package:social_media_app/screens/widgets/splash_logo.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (_auth.currentUser != null) {
         // User is already logged in
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => ScreenMainPage()),
         );
       } else {
         // User is not logged in
