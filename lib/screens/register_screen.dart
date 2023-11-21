@@ -7,14 +7,14 @@ import 'package:social_media_app/screens/widgets/screen_title.dart';
 import 'package:social_media_app/screens/widgets/splash_logo.dart';
 import 'package:social_media_app/constants/styles.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   // controllers
   TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -31,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const SizedBox(height: 80.0),
               const ScreenTitle(
-                title: 'Welcome Back  👋',
-                subTitle: 'Login into your account to continue',
+                title: 'Welcome 👋',
+                subTitle: 'Create your new account',
               ),
               const Logo(),
               TextField(
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   final password = passwordController.text;
 
                   bool isLogin =
-                      await FirebaseAuthHelper.instance.login(mobile, password);
+                      await FirebaseAuthHelper.instance.register(mobile, password);
 
                   if (isLogin) {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
