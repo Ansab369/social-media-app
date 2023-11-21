@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelText: 'Phone Number',
+                  labelText: 'Email',
                   prefixIcon: const Icon(Icons.email),
                 ),
               ),
@@ -95,8 +95,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 30),
               Center(
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () {     
                     // todo : create user
+                                        Navigator.pushNamed(context, '/register');
+
                   },
                   child: const Text(
                     'Register',

@@ -6,6 +6,8 @@ import 'package:social_media_app/constants/validations.dart';
 class FirebaseAuthHelper {
   static FirebaseAuthHelper instance = FirebaseAuthHelper();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? user = FirebaseAuth.instance.currentUser;
+
 
   Stream<User?> getAuthChange() {
     return _auth.authStateChanges();

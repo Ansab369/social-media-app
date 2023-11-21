@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:social_media_app/firebase_helper/firebase_auth_helper.dart';
+import 'package:social_media_app/firebase_helper/firebase_data_helper.dart';
 import 'package:social_media_app/screens/home_screen.dart';
 import 'package:social_media_app/screens/widgets/screen_title.dart';
 import 'package:social_media_app/screens/widgets/splash_logo.dart';
@@ -17,6 +18,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   // controllers
   TextEditingController mobileController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool _showPassword = false; // show password
   @override
@@ -34,7 +36,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 title: 'Welcome 👋',
                 subTitle: 'Create your new account',
               ),
-              const Logo(),
+              SizedBox(height: 40),
+              // const Logo(),
               TextField(
                 controller: mobileController,
                 keyboardType: TextInputType.emailAddress,
@@ -42,8 +45,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelText: 'Phone Number',
+                  labelText: 'Email',
                   prefixIcon: const Icon(Icons.email),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              TextField(
+                controller: nameController,
+                keyboardType: TextInputType.name,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  labelText: 'Name',
+                  prefixIcon: const Icon(Icons.person),
                 ),
               ),
               const SizedBox(height: 16.0),
@@ -79,6 +94,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       await FirebaseAuthHelper.instance.register(mobile, password);
 
                   if (isLogin) {
+                  String userId=  FirebaseAuthHelper.instance.user!.uid;
+                      addUserData(userId, nameController.text, mobileController.text);
+
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => HomeScreen(),
                     ));
@@ -87,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: const Padding(
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    'LogIn',
+                    'SignIn',
                     style: TextStyle(fontSize: 17),
                   ),
                 ),
@@ -97,9 +115,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: GestureDetector(
                   onTap: () {
                     // todo : create user
+                                        Navigator.pushNamed(context, '/login');
+
                   },
                   child: const Text(
-                    'Register',
+                    'Login',
                     style: TextStyle(
                       color: kBlueColor,
                       fontSize: 16,

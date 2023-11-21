@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/firebase_options.dart';
 import 'package:social_media_app/screens/home_screen.dart';
+import 'package:social_media_app/screens/login_screen.dart';
+import 'package:social_media_app/screens/register_screen.dart';
 import 'package:social_media_app/screens/splash_screen.dart';
 
 void main()async {
@@ -28,8 +30,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
           '/': (context) => const SplashScreen(),
-          // '/login': (context) => const LoginScreen(),
-          // '/forgotPassword': (context) => const ForgotPasswordScreen(),
+          '/login': (context) => const LoginScreen(),
+          '/register': (context) => const RegisterScreen(),
           // '/bashboard': (context) => const DahboardScreen(),
           // '/resetPassword': (context) => const ResetPasswordScreen(),
           // '/editProfileScreen': (context) => const EditProfileScreen(),
