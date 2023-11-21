@@ -22,7 +22,7 @@ class Post {
       id: map['id'] ?? '',
       title: map['title'] ?? '',
       postImageUrl: map['post'] ?? '',
-      postUserProfile: map['post'] ?? '',
+      postUserProfile: map['postUserProfile'] ?? '',
       likeAmount: map['like_amount'] ?? 0,
       submittedUserId: map['submited_user_id'] ?? '',
       comments: (map['comments'] as Map<String, dynamic>?)
