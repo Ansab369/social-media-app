@@ -1,4 +1,6 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +19,7 @@ class _PostWidgetState extends State<PostWidget> {
   bool isHeartAnimating = false;
   bool isLiked = false;
   bool isBookmarked = false;
+  bool _showComments = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +35,36 @@ class _PostWidgetState extends State<PostWidget> {
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(socialProvider.posts[index].postUserProfile),
+                    backgroundImage: NetworkImage(
+                        socialProvider.posts[index].postUserProfile),
                     radius: 18,
                   ),
                   const SizedBox(
                     width: 5,
                   ),
                   Text(
-                   socialProvider. posts[index].title,
+                    socialProvider.posts[index].title,
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
-                  const Icon(Icons.more_horiz)
+                  HeartAnimationWidget(
+                    alWaysAnimate: true,
+                    isAnimating: isBookmarked,
+                    child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            if (isBookmarked == true) {
+                              isBookmarked = false;
+                            } else {
+                              isBookmarked = true;
+                            }
+                          });
+                        },
+                        child: Text(
+                          isBookmarked ? "Follow" : "Following",
+                        )),
+                  ),
                 ],
               ),
             ),
@@ -56,7 +75,7 @@ class _PostWidgetState extends State<PostWidget> {
                   AspectRatio(
                     aspectRatio: 1,
                     child: Image.network(
-                     socialProvider. posts[index].postImageUrl,
+                      socialProvider.posts[index].postImageUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -104,57 +123,55 @@ class _PostWidgetState extends State<PostWidget> {
                         color: isLiked ? Colors.red : Colors.black,
                       )),
                 ),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.mode_comment_outlined)),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.send_outlined)),
+                Text('Liked by ${socialProvider.posts[index].likeAmount}'),
+
                 const Spacer(),
-                HeartAnimationWidget(
-                  alWaysAnimate: true,
-                  isAnimating: isBookmarked,
-                  child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if (isBookmarked == true) {
-                            isBookmarked = false;
-                          } else {
-                            isBookmarked = true;
-                          }
-                        });
-                      },
-                      icon: Icon(
-                        isBookmarked
-                            ? Icons.bookmark
-                            : Icons.bookmark_outline_outlined,
-                        color: Colors.black,
-                      )),
-                ),
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _showComments = !_showComments;
+                      });
+                    },
+                    icon: const Icon(Icons.mode_comment_outlined)),
+                SizedBox(width: 10),
+                //
+              
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 7),
-              child: Row(
-                children: [
-                  Text('Liked by ${socialProvider.posts[index].likeAmount}'),
-                ],
-              ),
-            ),
-          const  Padding(
-              padding:  EdgeInsets.only(left: 7, top: 3, bottom: 3),
-              child: Row(
-                children: [
-                  Text(
-                    "10-29",
-                    style:  TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey,
+              Visibility(
+                  visible: _showComments,
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.symmetric(vertical: 2.0,horizontal: 7),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Comments:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 8),
+                         Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: socialProvider.posts[index].comments.entries.map((comment) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(
+                  '${comment.key}: ${comment.value}',
+                  style: TextStyle(fontSize: 16),
+                ),
+              );
+            }).toList(),),
+                      
+                      ],
                     ),
                   ),
-                ],
-              ),
-            )
+                ),
           ],
         ),
       ),
