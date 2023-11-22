@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_app/firebase_helper/firebase_data_helper.dart';
 import 'package:social_media_app/firebase_helper/news_feed_provider.dart';
 import 'package:social_media_app/model/news_feed_model.dart';
 import 'package:social_media_app/screens/article_screen.dart';
@@ -22,19 +21,15 @@ class NewsFeedScreen extends StatelessWidget {
       newsFeedProvider.getNews();
     });
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        title: Image.asset('assets/logo2.png'),
+        leading: Image.asset('assets/logo.png'),
+        title: Text("News Feed"),
       ),
       body: SafeArea(
         child: 
-            // if (state.isLoading) {
-            //   return Center(child: CircularProgressIndicator());
-            // } else if (state.isError) {
-            //   return Center(child: Text('Some Error Occurd'));
-            // }
+            
              ListView.builder(
               itemCount:newsFeedProvider.newsList.length,
               itemBuilder: (context, index) {
