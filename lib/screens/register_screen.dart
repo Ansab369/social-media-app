@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_media_app/firebase_helper/firebase_auth_helper.dart';
 import 'package:social_media_app/firebase_helper/firebase_data_helper.dart';
 import 'package:social_media_app/screens/home_screen.dart';
@@ -23,6 +24,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _showPassword = false; // show password
   @override
   Widget build(BuildContext context) {
+    SocialMediaProvider socialProvider =
+        Provider.of<SocialMediaProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -90,17 +93,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   final mobile = mobileController.text;
                   final password = passwordController.text;
 
-                  bool isLogin =
-                      await FirebaseAuthHelper.instance.register(mobile, password);
+                  bool isLogin = await FirebaseAuthHelper.instance
+                      .register(mobile, password);
 
                   if (isLogin) {
-                  String userId=  FirebaseAuthHelper.instance.user!.uid;
-                      addUserData(userId, nameController.text, mobileController.text);
+                    String userId = FirebaseAuthHelper.instance.user!.uid;
+                    
+                    socialProvider.addUserData(
+                        userId, nameController.text, mobileController.text);
 
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => HomeScreen(),
                     ));
-                  } 
+                  }
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(10),
@@ -115,8 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: GestureDetector(
                   onTap: () {
                     // todo : create user
-                                        Navigator.pushNamed(context, '/login');
-
+                    Navigator.pushNamed(context, '/login');
                   },
                   child: const Text(
                     'Login',

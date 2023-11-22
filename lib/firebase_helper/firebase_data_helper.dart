@@ -2,9 +2,12 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:social_media_app/model/post_model.dart';
 
 
+class SocialMediaProvider with ChangeNotifier {
+  
 
 // while SignIn/ register
 void addUserData(
@@ -43,6 +46,7 @@ Future<void> getDataFromPostsCollection() async {
         
         Post post = Post.fromMap(data);
         posts.add(post);
+         notifyListeners();
 
         print('Data from document ${document.id}: $data');
       });
@@ -54,5 +58,6 @@ Future<void> getDataFromPostsCollection() async {
   } catch (e) {
     print('Error getting data from Firestore: $e');
   }
+}
 }
 
